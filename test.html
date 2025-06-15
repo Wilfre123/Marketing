@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Display</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function UserDisplay() {
+      const [users, setUsers] = useState([]);
+
+      useEffect(() => {
+        fetch('http://localhost:3001/auth/display')
+          .then(res => res.json())
+          .then(data => setUsers(data))
+          .catch(console.error);
+      }, []);
+
+      return (
+        <div>
+          <h2>User List from NestJS API</h2>
+          <table border="1" cellPadding="10">
+            <thead>
+              <tr><th>Username</th><th>Email</th><th>Password</th></tr>
+            </thead>
+            <tbody>
+              {users.map(user => (
+                <tr key={user.id}>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>{user.password}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<UserDisplay />, document.getElementById('root'));
+  </script>
+</body>
+</html>
