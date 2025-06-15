@@ -5,70 +5,29 @@
   <meta charset="UTF-8" />
   <title>Create User</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" type="text/css" href="style/index.css">
 </head>
 <body>
 
-  <div class="register">
-  <h2>Create User</h2>
+       
   <form id="userForm">
     <label>Email: <input type="email" name="email" required /></label><br /><br />
     <label>Password: <input type="password" name="password" required minlength="6" /></label><br /><br />
     <label>Username: <input type="text" name="username" required minlength="6" /></label><br /><br />
     <button type="submit">Create User</button>
   </form>
-  </div>
-<a href="test.html">test<a>
 
 
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label>Email: <input type="email" name="email" /></label><br/>
+    <label>Password: <input type="password" name="password" /></label><br/>
+    <button type="submit">Login</button>
+  </form>
 
+  <p id="message"></p>
+  
 
-
-
-
-
-
-<!-- React side-->
-  <script>
-  // react side
-    const form = document.getElementById('userForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const formData = new FormData(form);
-      const data = {
-           username: formData.get('password'),
-        email: formData.get('email'),
-        password: formData.get('password'),
-      };
-
-      try {
-        // CHANGE https to http here:
-        const response = await fetch('http://localhost:3001/user/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-
-        const rawText = await response.text();
-        console.log('Raw response:', rawText);
-
-        try {
-          const result = JSON.parse(rawText);
-
-          if (response.ok) {
-            alert('User created successfully!');
-            form.reset();
-          } else {
-            alert('Error: ' + (result.message || 'Unknown error'));
-          }
-        } catch (e) {
-          alert('Invalid JSON from server:\n' + rawText);
-        }
-
-      } catch (err) {
-        alert('Fetch error: ' + err.message);
-      }
-    });
-  </script>
+<script src="javascript/auth.js"></script>
 </body>
 </html>
